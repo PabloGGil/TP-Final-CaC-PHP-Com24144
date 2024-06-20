@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <title>EligeTuEquipo</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg bg-secondary custom-navbar">
+        <div class="container-fluid">
+          <a class="navbar-brand text-warning h2" href="#">Elige tu Equipo</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarText"
+            aria-controls="navbarText"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 custom-navbar">
+              <li class="nav-item">
+                <a class="nav-link text-warning h3" href="inicio_sesion.html"
+                  >Iniciar Sesión</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-warning h3" href="registro.html"
+                  >Registrarse</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-warning h3" href="#">Algo</a>
+              </li>
+            </ul>
+            <span class="nav-item">
+              <img
+                src="https://th.bing.com/th/id/R.1e841e77f5ea19b7835ccc6841c53cfb?rik=BnGtCLvCG1F8Uw&riu=http%3a%2f%2fwww.transparentpng.com%2fthumb%2fpokemon-go%2f2mdYaH-pokemon-go-logo-hd-image.png&ehk=PCov3bxMq5qZidjoNVN%2fTyjbKb8kvkvGLwXg7nmcmSw%3d&risl=&pid=ImgRaw&r=0"
+                alt="pokébola"
+                height="70px"
+              />
+            </span>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="bodyHome">
+      <h1>¡Selecciona tu Equipo Ganador!</h1>
+      <section class="SeleccionaEquipo">
+        <h3>Elige 5 para formar tu equipo</h3>
+        <div id="cardPokemon-container"></div>
+      </section>
+    </main>
+    <footer>
+      <nav class="navbar navbar-expand-lg bg-secondary custom-navbar">
+        <div class="container-fluid">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarText"
+            aria-controls="navbarText"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 custom-navbar">
+              <li class="nav-item">
+                <a class="nav-link text-warning h3" aria-current="page" href="#"
+                  >Términos y Condiciones</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-warning h3" href="#">F.A.Q.</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-warning h3" href="#">Ayuda</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-warning h3" href="#"
+                  >CaC - PHP.Com 24144 - TP Final - Equipo Pokémon</a
+                >
+              </li>
+            </ul>
+            <li class="nav-item">
+              <a class="nav-link text-warning" href="index.html"
+                ><img
+                  src="img/arrow-circle-up_1.png"
+                  height="35px"
+                  alt="flecha_ir_a_home"
+              /></a>
+            </li>
+          </div>
+        </div>
+      </nav>
+    </footer>
+    <script src="script.js"></script>
+    <!-- Este link para el js -->
+    <script src="api.js"></script>
+    <!-- Este link para la API -->
+  </body>
+</html>
