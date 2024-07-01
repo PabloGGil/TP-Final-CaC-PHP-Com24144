@@ -51,6 +51,11 @@ function displayPokemonDetails(pokemonDetailsArray) {
       <img src="${pokemon.image}" alt="${pokemon.name}">
       <p>Peso: ${pokemon.weight}</p>
       <p>Altura: ${pokemon.height}</p>
+      <div >
+        <input id="btnAgregar" class="boton" onclick="agregar('${pokemon.name}','${pokemon.weight}','${pokemon.height}','${pokemon.image}')" value="Agregar">
+        <input id="btnQuitar"  class="boton" onclick="quitar('${pokemon.name}')" value="quitar">
+      </div>
+      
     `;
     container.appendChild(pokemonElement);
   });
@@ -58,3 +63,13 @@ function displayPokemonDetails(pokemonDetailsArray) {
 
 // consulto a la api
 getAllPokemon();
+
+// btnAgregar=document.getElementById("btnAgregar");
+// btnAgregar.addEventListener("click",agregar,false);
+function agregar(nombre,peso,altura,imagen ){
+  console.log("aprete boton" + nombre)
+}
+
+function quitar(nombre){
+  console.log("aprete boton quitar"+ nombre)
+}
