@@ -116,7 +116,7 @@ class Usuario{
         $dao=new DAO();
         $login=$dao->ejecutarSQL("select count(username) as cuenta from usuario where correo='{$usuario}' and password='{$password}'");
         if($login['rc']==0){
-            if($login['info']['cuenta']>=1){
+            if($login['info'][0]>=1){
                 // login exitoso
                 return true;
             }else{
