@@ -1,8 +1,3 @@
-const CANT_MIN_CARACT=8;
-const CANT_MIN_LETRAS=5;
-const CANT_MIN_NUMEROS=3;
-
-
 
 /*-- objeto para devolver el estado de la validacion y los errores
 ---- rs(Return Status) true -->ok  false-->error 
@@ -14,12 +9,20 @@ const CANT_MIN_NUMEROS=3;
 }
 */
 
-const form = document.getElementById("botonLogin");
-form.addEventListener("click",validarDatos);
+const btnlogin = document.getElementById("botonLogin");
+btnlogin.addEventListener("click",validarDatos);
+// const btnalgo=document.getElementById("algo");
+// btnalgo.addEventListener("click",mostrarUsuarios);
+// // const registro = document.getElementById("botonLogin");
+// // registro.addEventListener("click",validarRegistro);
+// function mostrarUsuarios(){
+//     q="consulta";
+//     Dato_enviar={
+//         q
+//     }
+//     ajaxReq(Dato_enviar);
 
-// const registro = document.getElementById("botonLogin");
-// registro.addEventListener("click",validarRegistro);
-
+// }
 
 
 function validarDatos(e) {
@@ -32,15 +35,29 @@ function validarDatos(e) {
         alert(valideta.error)
    } else {
         // Si la validación del formulario es exitosa, muestra un mensaje en la consola
-        console.log('El formulario es válido. Enviar datos...');
-        alert("el formulario pudo enviar los datos")
+        const field=document.getElementById("email");
+        const valueEmail = field.value ;//'pablog62@gmail.com' //
+        const fieldP=document.getElementById("password");
+        const valuepass = fieldP.value ;//'lapastrona22' //
+        Dato_enviar={
+            // method: 'POST',
+            // headers: {
+            //     'Content-Type': 'application/json'
+            // },
+            // body: JSON.stringify({
+             valueEmail, valuepass
+            //  })
+        }
+        ajaxReq(Dato_enviar);
+        //alert("el formulario pudo enviar los datos")
     }
-};
+}
+
 
 function validarForm(){
-    rta=[{rs:true,error:""}];
-    rta[0]= validarPass('password'); // Validar campo de contraseña
-    rta[1]= validarCorreo('correo');
+    rta=[{rs:false,error:""}];
+    rta[0]= validarTexto('password'); // Validar campo de contraseña
+    rta[1]= validarCorreo('email');
     let estado={};
     estado.rs=rta[0].rs && rta[1].rs;
     estado.error=rta[0].error + "\n" + rta[1].error;
@@ -49,32 +66,23 @@ function validarForm(){
     return estado;
 }
 
-export function validarCorreo(campo){
+ function validarCorreo(campo){
     const field = document.getElementById(campo); // Obtiene el elemento del campo mediante su ID
     const value = field.value
-    let rta={rs:true,error:""};
-    if(!/\w+@\w+.\w+/.test(value))
-    {
-        rta.rs=false;
-        rta.error="correo invalido";
-    }
-    return rta;
-}
-
-export function validarFecha(campo){
-    let rta={rs:false,error:"fecha invalida"};
-    if(/[0-9]+\/[0-9]+\[0-9]/.test(value))
-    {
-            rta.rs=true;
-            rta.error="";
-    }
-    return rta;
-
-}
-
-
-export function validarTexto(campo){
     let rta={rs:false,error:"correo invalido"};
+    if(/\w+@\w+.\w+/.test(value))
+    {
+        rta.rs=true;
+        rta.error="";
+    }
+    return rta;
+}
+
+ 
+ function validarTexto(campo){
+    const field = document.getElementById(campo); // Obtiene el elemento del campo mediante su ID
+    const value = field.value
+    let rta={rs:false,error:"entrada invalida"};
     if(/\w+/.test(value))
     {
             rta.rs=true;
@@ -84,49 +92,28 @@ export function validarTexto(campo){
 
 }
 
-export function validarPass(campo) {
-    const field = document.getElementById(campo); // Obtiene el elemento del campo mediante su ID
-    const value = field.value
-    result=PoliticaPassOK(value);
-    return result; // Devuelve false indicando que la validación ha fallado
+function ajaxReq(data) {
     
-};
+    const jsonString = JSON.stringify(data);
+    const xhr = new XMLHttpRequest();
 
-export function PoliticaPassOK(valor){
-    // let salida=rta;
-    let salida={rs:true,error:""};
-    // --- verificar cantidad de caracteres .... 8 caracteres minimo
-    if (valor.length<CANT_MIN_CARACT ){
-        salida.rs=false;
-        salida.error="la cantidad de minima de caracteres es " + CANT_MIN_CARACT;
-    }  
-// --- verificar cantidad de letras ... 6 letras como minimo
-// --- verificar cantidad DE NUMEROS ...2 MINIMO
-    letras=0;
-    nros=0; 
-   for(let i=0; i<valor.length; i++){
-        
-        letra=valor[i];
-        console.log(typeof letra);
-        if(/[0-9]/.test(letra)){
-                nros++;
-        }
-        if(/[a-zA-Z]/.test(letra)){
-            letras++;
+//   let selec = document.getElementById("selected").innerText;
+    xhr.open("POST", "vista/login.php");
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.send(jsonString);
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+            let respuesta =JSON.parse( this.responseText);
+            if (respuesta.rc){
+                // estado.innerHTML = respuesta.msgerror;
+                alert(respuesta.msgerror);
+            }else{
+                alert("login exitoso");
+                
+            }
         }
     }
-    if(nros<CANT_MIN_NUMEROS){
-        salida.rs=false
-        salida.error = salida.error + "\n"+"la cantidad de minima de numeros es " + CANT_MIN_NUMEROS;
-
-    }
-    if(letras<CANT_MIN_LETRAS){
-        salida.rs=false;
-        salida.error =salida.error +"\n"+"la cantidad de minima de letras es " + CANT_MIN_LETRAS;
-    }
-
-    return salida;
-        
     
+ 
 }
-

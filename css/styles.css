@@ -1,0 +1,139 @@
+* {
+  margin: 0;
+  border: none;
+  padding: none;
+  box-sizing: border-box;
+}
+
+.bodyHome {
+  background-color: gold;
+}
+
+main h1 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: xx-large;
+  font-weight: bolder;
+  color: #f70808;
+  text-align: center;
+  padding: 1em;
+}
+
+.SeleccionaEquipo h3 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: x-large;
+  font-weight: bolder;
+  color: #f70808;
+  text-align: center;
+}
+
+footer {
+  position: relative;
+  bottom: 0;
+}
+
+footer ul {
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+}
+
+footer ul li {
+  justify-content: space-around;
+  padding-left: 0.6em;
+  padding-right: 0.6em;
+}
+
+/*  TODAS LAS PAGINAS MENOS LA PPAL.  */
+
+.bodyRegistro,
+.bodyIniSesion,
+.bodyEquipo {
+  background-image: url(https://th.bing.com/th/id/R.bc7364fcadfaccc5be10b13c6e8f393c?rik=DHzLuDGQLtu6hg&riu=http%3a%2f%2fwallpapercave.com%2fwp%2f03NeD0y.jpg&ehk=ROPOGXAiPYcOVPiOa6FPsxMxk6%2fJ63R%2ffp91dljeDZw%3d&risl=&pid=ImgRaw&r=0);
+  background-size: cover;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.3
+  ); /* Color de fondo blanco con opacidad */
+  background-blend-mode: overlay; /* Mezcla el color y la imagen de fondo */
+}
+
+.volverHome {
+  margin: 1em;
+  display: inline;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: large;
+  font-weight: bolder;
+  text-decoration: none;
+  color: gold;
+}
+
+/*  PAGINA DE INICIO SESIÓN  */
+
+.iniSesion,
+.registro,
+.secEquipo {
+  background-color: #d1d398;
+  width: 50%;
+  margin: 5em auto;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  opacity: 0.85;
+}
+
+.iniSesion h2,
+.registro h2,
+.divEquipo h2 {
+  font-weight: bolder;
+  color: #960505;
+  padding: 0.5em;
+}
+
+.inputIniSesion,
+.inputRegistro {
+  display: block;
+  width: 85%;
+  border: 2px solid #960505;
+  border-radius: 10px;
+  margin: 3%;
+  height: 3.5rem;
+}
+
+.boton {
+  background-color: #960505;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: large;
+  font-weight: bolder;
+  color: #d2d3c7;
+  border-radius: 10px;
+  padding: 0em 2em;
+}
+
+.leerTyC {
+  font-size: small;
+  color: #992020;
+}
+
+.txtAyuda {
+  margin: 0.5em;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: large;
+  font-weight: bolder;
+  text-decoration: none;
+  color: #960505;
+}
+
+.divEquipo h4 {
+  font-weight: bolder;
+  color: #960505;
+  padding: 0.5em;
+}
+
+.divEquipo {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
