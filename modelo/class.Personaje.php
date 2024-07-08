@@ -4,31 +4,31 @@ require_once "class.DAO.php";
 class Personaje{
 
     
-    // private $Nombre; 
-    // private $Tipo; 
-    // private $Categoria;
-    // private $Ataque;
-    // private $Defensa;
+    private $Nombre; 
+    private $Tipo; 
+    private $imagen;
+    private $peso;
+    private $altura;
 
-    // public function __construct($nombre,$tipo,$categoria,$ataque,$defensa)
-    // {
-    //    $this->setNombre($nombre);
-    //    $this->setTipo($tipo);
-    //    $this->setCategoria($categoria);
-    //    $this->setAtaque($ataque);
-    //    $this->setDefensa($defensa);
-    // }
-
-    public function __construct(private $Nombre,private $imagen="", private $Ataque=0, private $Defensa=0)
+    public function __construct($nombre,$imagen="",$peso=0,$altura=0)
     {
-    /*funcion sin codigo 
-    ver  Properties Promotion o Promoted Properties  https://stitcher.io/blog/constructor-promotion-in-php-8
-    Que hace este tipo de constructor?
-        * crea las propiedades afuera
-        * le dices que son privadas (pueden ser tambien public o protected)
-        * hace la asignacion incial
-     */
+       $this->setNombre($nombre);
+       $this->setImagen($imagen);
+       $this->setPeso($peso);
+       $this->setAltura($altura);
     }
+
+    // public function __construct(private $Nombre,private $imagen="", private $peso="", private $altura="")
+    // {
+    // /*funcion sin codigo 
+    // ver  Properties Promotion o Promoted Properties  https://stitcher.io/blog/constructor-promotion-in-php-8
+    // Que hace este tipo de constructor?
+    //     * crea las propiedades afuera
+    //     * le dices que son privadas (pueden ser tambien public o protected)
+    //     * hace la asignacion incial
+    //  */
+    // private $Nombre,private $imagen="", private $peso="", $this $altura
+    // }
     /*-----------getters------------------*/
     public function getNombre (){
         return $this->Nombre;
@@ -40,18 +40,18 @@ class Personaje{
         return $this->imagen;
     }
 
-    public function getAtaque (){
-        return $this->Ataque;
+    public function getPeso (){
+        return $this->peso;
     }
 
-    public function getDefensa (){
-        return $this->Defensa;
+    public function getAltura (){
+        return $this->altura;
     }
   
     public function getID(){
         $daousr=new DAO();
         $res=$daousr->ejecutarSQL("SELECT ID from personaje where nombre='{$this->getNombre()}'");
-        return $res['info']['ID'];
+        return $res['info'][0]['ID'];
 
 
     }
@@ -63,27 +63,28 @@ class Personaje{
     }
 
 
-    public function setAtaque ($aux){
-        $this->Ataque=$aux;
+    public function setPeso ($aux){
+        $this->peso=$aux;
     }
 
     public function setImagen ($aux){
         $this->imagen=$aux;
     }
 
-    public function setDefensa ($aux){
-        $this->Defensa=$aux;
+    public function setAltura ($aux){
+        $this->altura=$aux;
     }
     /*-----------metodos------------------*/
     public function consultar(){
-        $strSQL="SELECT nombre,tipo,categoria,puntos_ataque,puntos_defensa FROM PERSONAJE";
+        $strSQL="SELECT nombre,tipo,categoria,puntos_peso,puntos_altura FROM PERSONAJE";
     }
 
     public function existe($nombre){
-        $strSQL=" SELECT count(nombre) as cuenta FROM PERSONAJE where nombre='{$nombre}'";
+        $strSQL=" SELECT count(nombre) AS cuenta FROM PERSONAJE where nombre='{$nombre}'";
         $dao=new DAO();
         $data=$dao->ejecutarSQL($strSQL);
-        if($data['info']['cuenta']!=0){
+        // var_dump($data['info'][0]);
+        if($data['info'][0]['cuenta']!="0"){
             return true;
         }else{
             return false;
@@ -91,15 +92,18 @@ class Personaje{
     }
 
     public function insertarReg(){
-        if(!$this->existe($this->getNombre())){
-            $strSQL="INSERT INTO personaje(nombre,imagen,puntos_ataque,puntos_defensa) 
-            VALUES('{$this->getNombre()}','{$this->getImagen()}',{$this->getAtaque()},{$this->getDefensa()})";
-            echo $strSQL;
+        if(!($this->existe($this->getNombre()))){
+            $strSQL="INSERT INTO personaje(nombre,imagen,peso,altura) 
+            VALUES('{$this->getNombre()}','{$this->getImagen()}',{$this->getPeso()},{$this->getAltura()})";
+            //echo $strSQL;
             $dao=new DAO();
-            $dao->ejecutarSQL($strSQL);
+            $resultado=$dao->ejecutarSQL($strSQL);
         }else{
-            echo " el personaje ya existe";
+            $resultado['errmsg']="el personaje ya esta registrado";
+            $resultado['rc']=1;
+            $resultado['info'] =null;
         }
+        return $resultado;
     }
    
 }

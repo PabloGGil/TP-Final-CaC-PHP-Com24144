@@ -24,11 +24,7 @@ function validarRegistro(e){
             q,correo,nombre,apellido,fecha,password
         }
         ajaxReq(Dato_enviar);
-        q="consulta";
-        Dato_enviar={
-            q
-        }
-        ajaxReq(Dato_enviar);
+       
         //alert("el formulario pudo enviar los datos")
     }
 }

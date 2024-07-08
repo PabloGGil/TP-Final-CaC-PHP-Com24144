@@ -8,9 +8,10 @@ class Relacion{
     private $id_usr;
     
 
-    public function __construct()
+    public function __construct($id_poke,$id_usr)
     {
-       
+       $this->id_poke = $id_poke;
+       $this->id_usr = $id_usr;
     }
 
     /*-----------getters------------------*/
@@ -48,26 +49,56 @@ class Relacion{
 
     /*-----------metodos------------------*/
     public function consultarBD(){
-        $strSQL="select u.username ,p.nombre, p.puntos_ataque ,p.puntos_defensa,p.imagen 
+        $strSQL="select u.username ,p.nombre, p.alto ,p.peso,p.imagen 
                 from pokemon.usuario u ,pokemon.personaje p ";
         $dao=new DAO();
         $data=$dao->ejecutarSQL($strSQL);
         return $data;
     }
+    public function ExisteRel(){
+        $strSQL=" SELECT count(id) as cuenta FROM GRUPOS where id_personaje={$this->getid_poke()} AND id_usuario={$this->getid_usr()}";
+        $dao=new DAO();
+        $data=$dao->ejecutarSQL($strSQL);
+        if($data['info'][0]['cuenta']!=0){
+            return true;
+        }else{
+            return false;
+        }
 
-    public function insertar($id_usr,$id_poke){
-        
-        $strSQL="INSERT INTO GRUPOS(id_poke,id_usr) VALUES({$this->getid_poke()},{$this->getid_usr()})";
-        
-        $dao=new DAO();
-        $dao->ejecutarSQL($strSQL);
     }
-    public function eliminar($id_usr,$id_poke){
-        
-        $strSQL="DELETE FROM GRUPOS WHERE ID_PERSONAJE='{$this->getid_poke()}' AND ID_USUARIO='{$this->getid_usr()}')";
-        
+
+    public function CantPoke(){
+        $strSQL="SELECT count(id) as cuenta FROM GRUPOS where id_usuario={$this->getid_usr()}";
         $dao=new DAO();
-        $dao->ejecutarSQL($strSQL);
+        $data=$dao->ejecutarSQL($strSQL);
+        return $data['info'][0]['cuenta'];
+
+    }
+    public function insertar(){
+        
+        if(!$this->ExisteRel()){
+            $strSQL="INSERT INTO GRUPOS(id_personaje,id_usuario) VALUES({$this->getid_poke()},{$this->getid_usr()})";
+            
+            $dao=new DAO();
+            $resultado=$dao->ejecutarSQL($strSQL);
+        }else{
+            $resultado['rc']=1;
+            $resultado['errmsg']="el usuario ya tiene este pokemon asociado";
+        }
+        return $resultado;
+    }
+    public function eliminar(){
+        if(!$this->ExisteRel()){
+            $strSQL="DELETE FROM GRUPOS WHERE ID_PERSONAJE='{$this->getid_poke()}' AND ID_USUARIO='{$this->getid_usr()}')";
+            
+            $dao=new DAO();
+            $resultado=$dao->ejecutarSQL($strSQL);
+        }
+        else{
+            $resultado['rc']=1;
+            $resultado['errmsg']="No se pudo eliminar  este pokemon";
+        }
+        return $resultado;
     }
     
 }

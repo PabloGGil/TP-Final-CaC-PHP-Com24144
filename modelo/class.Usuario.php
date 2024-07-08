@@ -1,9 +1,9 @@
 <?php
 require_once "class.DAO.php";
-
+require_once "class.Relacion.php";
 class Usuario{
 
-    
+    const MAXPOKE=5;
     private $Username; 
     private $Correo; 
     private $Password;
@@ -12,7 +12,13 @@ class Usuario{
 
     public function __construct($nombre="",$apellido="",$correo="",$password="",$fecha="")
     {
-       $this->setUsername($nombre."-".$apellido);
+       if($apellido!=""){
+        $username=$nombre."-".$apellido;
+       }else{
+        $username=$nombre;
+       }
+
+       $this->setUsername($username);
        $this->setCorreo($correo);
        $this->setPassword($password);
        $this->setFechaRegistro($fecha);
@@ -71,7 +77,7 @@ class Usuario{
         $strSQL=" SELECT count(username) as cuenta FROM USUARIO where username='{$username}'";
         $dao=new DAO();
         $data=$dao->ejecutarSQL($strSQL);
-        if($data['info']['cuenta']!=0){
+        if($data['info'][0]['cuenta']!=0){
             return true;
         }else{
             return false;
@@ -106,7 +112,7 @@ class Usuario{
             //  aca borrar primero todos los registros de la tabla grupos
             
             $strSQL="DELETE FROM USUARIO WHERE username='{$this->getUsername()}'";
-            echo $strSQL;
+           // echo $strSQL;
             $dao=new DAO();
             $dao->ejecutarSQL($strSQL);
         }
@@ -116,7 +122,7 @@ class Usuario{
         $dao=new DAO();
         $login=$dao->ejecutarSQL("select count(username) as cuenta from usuario where correo='{$usuario}' and password='{$password}'");
         if($login['rc']==0){
-            if($login['info']['cuenta']>=1){
+            if($login['info'][0]['cuenta']>=1){
                 // login exitoso
                 return true;
             }else{
@@ -130,24 +136,29 @@ class Usuario{
     public function getID(){
         $daousr=new DAO();
         $res=$daousr->ejecutarSQL("SELECT ID from usuario where username='{$this->getUsername()}'");
-        var_dump($res);
-        return $res['info']['ID'];
+        // var_dump($res);
+        return $res['info'][0]['ID'];
     }
     Public function VincularPoke($nombrepoke){
        
         $poke=new personaje($nombrepoke);
-        if($this->cant>5){
-            echo "Supero la cantidad de 5 poke asociados";
-            return;
+        $id_usr=$this->getID();
+        $id_personaje=$poke->getID();
+        $trel=new Relacion($id_personaje,$id_usr);
+        if($trel->CantPoke()>self::MAXPOKE-1){
+            $rta['rc']=1;
+            $rta['errmsg']= "Supero la cantidad de 5 poke asociados";
+            $rta['info']=null;
+            return $rta;
+        }else{
+        // if ($this->Username)){
+            
+            $rta=$trel->insertar( );
+            
+            return $rta;
         }
-
-        if (isset($this->Username)){
-            $id_usr=$this->getID();
-            $id_personaje=$poke->getID();
-            $trel=new Relacion();
-            $trel->insertar($id_usr,$id_personaje );
-            $this->cant++;
-        }
+       
+        
 
 
     }
@@ -155,13 +166,13 @@ class Usuario{
     Public function DesvincularPoke($nombrepoke){
        
         $poke=new personaje($nombrepoke);
-        if (isset($this->Username)){
+        // if (isset($this->Username)){
             $id_usr=$this->getID();
             $id_personaje=$poke->getID();
-            $trel=new Relacion();
-            $trel->eliminar($id_usr,$id_personaje );
-            $this->cant--;
-        }
+            $trel=new Relacion($id_personaje,$id_usr);
+            $trel->eliminar( );
+           
+        // }
 
 
     }

@@ -1,5 +1,6 @@
 const btnalgo=document.getElementById("algo");
 btnalgo.addEventListener("click",mostrarUsuarios);
+
 // const registro = document.getElementById("botonLogin");
 // registro.addEventListener("click",validarRegistro);
 function mostrarUsuarios(){
@@ -7,7 +8,7 @@ function mostrarUsuarios(){
     Dato_enviar={
         q
     }
-    ajaxReq(Dato_enviar);
+    ajaxReq(Dato_enviar,"vista/usuario.php");
 
 }
 
@@ -80,9 +81,10 @@ getAllPokemon();
 // btnAgregar.addEventListener("click",agregar,false);
 function agregar(nombre,peso,altura,imagen ){
   console.log("aprete boton" + nombre)
-  q="consulta";
+  username=document.getElementById("username").outerText;
+  q="alta";
   Dato_enviar={
-      q=
+      q,username,nombre,peso,altura,imagen
   }
   ajaxReq(Dato_enviar,"vista/equipo.php");
 
@@ -90,7 +92,12 @@ function agregar(nombre,peso,altura,imagen ){
 
 function quitar(nombre){
   console.log("aprete boton quitar"+ nombre)
-
+  username=document.getElementById("username").outerText;
+  q="baja";
+  Dato_enviar={
+      q,username
+  }
+  ajaxReq(Dato_enviar,"vista/equipo.php");
 }
   function ajaxReq(data,form) {
     
@@ -98,20 +105,20 @@ function quitar(nombre){
     const xhr = new XMLHttpRequest();
 
 //   let selec = document.getElementById("selected").innerText;
-    xhr.open("POST", "vista/registro.php");
+    xhr.open("POST", form);
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhr.send(jsonString);
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
-            let respuesta =JSON.parse( this.responseText);
-            if (respuesta.rc){
-                // estado.innerHTML = respuesta.msgerror;
-                alert(respuesta.msgerror);
-            }else{
-                console.log(respuesta.info)
-                
-            }
+          console.log(this.responseText);
+          let respuesta =JSON.parse( this.responseText);
+          if (respuesta.rc==0){
+              // estado.innerHTML = respuesta.msgerror;
+              console.log(respuesta.info);
+          }else{
+              alert(respuesta.errmsg);
+              
+          }
         }
     }
     
