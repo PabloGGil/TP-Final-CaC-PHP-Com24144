@@ -165,8 +165,9 @@ class Usuario{
 
     Public function DesvincularPoke($nombrepoke){
        
-        $poke=new personaje($nombrepoke);
+           
         // if (isset($this->Username)){
+            $poke=new personaje($nombrepoke);
             $id_usr=$this->getID();
             $id_personaje=$poke->getID();
             $trel=new Relacion($id_personaje,$id_usr);

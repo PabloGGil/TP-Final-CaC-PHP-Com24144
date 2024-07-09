@@ -29,7 +29,8 @@ $data = json_decode(file_get_contents('php://input'), true);
             echo "error";
         }
     }else{
-
+        $username  =  $data['username'];  
+        $nombrePoke  =  $data['nombre'];   
         $grupo=new Usuario($username);
         $retorno=$grupo->DesvincularPoke($nombrePoke);
     }

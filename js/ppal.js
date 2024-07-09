@@ -95,7 +95,7 @@ function quitar(nombre){
   username=document.getElementById("username").outerText;
   q="baja";
   Dato_enviar={
-      q,username
+      q,username,nombre
   }
   ajaxReq(Dato_enviar,"vista/equipo.php");
 }

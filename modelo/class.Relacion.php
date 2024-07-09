@@ -88,8 +88,8 @@ class Relacion{
         return $resultado;
     }
     public function eliminar(){
-        if(!$this->ExisteRel()){
-            $strSQL="DELETE FROM GRUPOS WHERE ID_PERSONAJE='{$this->getid_poke()}' AND ID_USUARIO='{$this->getid_usr()}')";
+        if($this->ExisteRel()){
+            $strSQL="DELETE FROM GRUPOS WHERE ID_PERSONAJE={$this->getid_poke()} AND ID_USUARIO={$this->getid_usr()}";
             
             $dao=new DAO();
             $resultado=$dao->ejecutarSQL($strSQL);
